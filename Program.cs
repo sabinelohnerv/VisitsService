@@ -20,6 +20,16 @@ builder.Services.Configure<CassandraOptions>(
 
 builder.Services.AddSingleton<CassandraSessionFactory>();
 
+builder.Services.AddHttpClient<UserService>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5051");
+});
+builder.Services.AddHttpClient<PropertyService>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5191");
+});
+
+
 // ==== Repositorios y Servicios ====
 builder.Services.AddScoped<VisitRepository>();
 builder.Services.AddScoped<VisitService.API.Services.VisitService>();
@@ -50,6 +60,9 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
     };
 });
+
+// ==== EmailService ====
+builder.Services.AddScoped<IEmailService, SmtpEmailService>();
 
 // ==== FluentValidation ====
 builder.Services.AddControllers();
