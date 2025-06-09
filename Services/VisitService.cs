@@ -57,8 +57,10 @@ namespace VisitService.API.Services
             var body = $"Has recibido una nueva solicitud para tu propiedad: '{propertyTitle ?? visit.IdProperty.ToString()}'\n\n" +
                        $"Fecha solicitada: {visit.RequestedDateTime:dd/MM/yyyy HH:mm}\n" +
                        $"Contacto: {visit.ContactEmail}, {visit.ContactPhone}";
-
-            await _emailService.SendEmailAsync(ownerEmail, subject, body);
+            if (!string.IsNullOrEmpty(ownerEmail))
+            {
+                await _emailService.SendEmailAsync(ownerEmail, subject, body);
+            }
         }
 
 
