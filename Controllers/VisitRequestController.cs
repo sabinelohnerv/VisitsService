@@ -8,7 +8,7 @@ using VisitService.API.Services;
 namespace VisitService.API.Controllers
 {
     [ApiController]
-    [Route("api/v1/visits")]
+    [Route("visits")]
     [Authorize]
     public class VisitRequestController : ControllerBase
     {
