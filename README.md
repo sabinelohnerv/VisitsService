@@ -55,7 +55,7 @@ Crea un archivo `appsettings.Development.json` con el siguiente formato:
 }
 
 
-AUTORA
+## AUTORA
 
 Sabine Lohner Villarroel
 sabinelohnerv@gmail.com | GitHub @sabinelohnerv
