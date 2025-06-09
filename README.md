@@ -28,11 +28,11 @@ Este servicio requiere autenticación mediante JWT. El token debe incluir el `su
 
 | Método | Ruta | Descripción |
 |--------|------|-------------|
-| POST | `/api/v1/visits` | Crear una solicitud de visita |
-| GET | `/api/v1/visits/my-visits` | Obtener visitas del usuario interesado |
-| GET | `/api/v1/visits/owner` | Obtener visitas recibidas (solo para propietarios) |
-| GET | `/api/v1/visits/property/{propertyId}` | Obtener visitas por propiedad |
-| PUT | `/api/v1/visits/{id}/status` | Cambiar el estado de una visita (solo propietarios) |
+| POST | `/visits` | Crear una solicitud de visita |
+| GET | `/visits/my-visits` | Obtener visitas del usuario interesado |
+| GET | `/visits/owner` | Obtener visitas recibidas (solo para propietarios) |
+| GET | `/visits/property/{propertyId}` | Obtener visitas por propiedad |
+| PUT | `/visits/{id}/status` | Cambiar el estado de una visita (solo propietarios) |
 
 ## ⚙️ Variables de configuración
 
