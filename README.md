@@ -53,9 +53,3 @@ Crea un archivo `appsettings.Development.json` con el siguiente formato:
     "Keyspace": "realestate"
   }
 }
-
-
-AUTORA
-
-Sabine Lohner Villarroel
-sabinelohnerv@gmail.com | GitHub @sabinelohnerv
