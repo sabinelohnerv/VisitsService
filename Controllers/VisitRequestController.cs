@@ -69,10 +69,6 @@ namespace VisitService.API.Controllers
         public async Task<IActionResult> GetVisitsByProperty(Guid propertyId)
         {
             var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-            var isOwner = await _visitService.IsUserOwnerOfPropertyAsync(propertyId, userId);
-            if (!isOwner)
-                return Forbid("No tienes permiso para ver las visitas de esta propiedad.");
-
             var visits = await _visitService.GetVisitsByPropertyAsync(propertyId);
             return Ok(visits);
         }
