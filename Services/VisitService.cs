@@ -66,8 +66,14 @@ namespace VisitService.API.Services
 
         public async Task<List<VisitRequest>> GetVisitsByUserAsync(Guid userId)
         {
-            return await _repository.GetVisitsByUserAsync(userId);
+            var visits = await _repository.GetVisitsByUserAsync(userId);
+            foreach (var visit in visits)
+            {
+                visit.PropertyTitle = await _propertyService.GetPropertyTitleAsync(visit.IdProperty);
+            }
+            return visits;
         }
+
 
         public async Task<bool> UpdateStatusByOwnerAsync(Guid idVisitRequest, string newStatus, Guid ownerId)
         {
@@ -99,12 +105,22 @@ namespace VisitService.API.Services
 
         public async Task<List<VisitRequest>> GetVisitsByOwnerAsync(Guid ownerId)
         {
-            return await _repository.GetVisitsByOwnerAsync(ownerId);
+            var visits = await _repository.GetVisitsByOwnerAsync(ownerId);
+            foreach (var visit in visits)
+            {
+                visit.PropertyTitle = await _propertyService.GetPropertyTitleAsync(visit.IdProperty);
+            }
+            return visits;
         }
 
         public async Task<List<VisitRequest>> GetVisitsByPropertyAsync(Guid propertyId)
         {
-            return await _repository.GetVisitsByPropertyAsync(propertyId);
+            var visits = await _repository.GetVisitsByPropertyAsync(propertyId);
+            foreach (var visit in visits)
+            {
+                visit.PropertyTitle = await _propertyService.GetPropertyTitleAsync(visit.IdProperty);
+            }
+            return visits;
         }
 
         public async Task<bool> IsUserOwnerOfPropertyAsync(Guid propertyId, Guid userId)

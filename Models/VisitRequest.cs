@@ -16,5 +16,6 @@ namespace VisitService.API.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        public string? PropertyTitle { get; set; }
     }
 }
