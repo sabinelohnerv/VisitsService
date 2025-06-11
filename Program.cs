@@ -22,11 +22,11 @@ builder.Services.AddSingleton<CassandraSessionFactory>();
 
 builder.Services.AddHttpClient<UserService>(client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5051");
+    client.BaseAddress = new Uri("http://localhost:5001");
 });
 builder.Services.AddHttpClient<PropertyService>(client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5191");
+    client.BaseAddress = new Uri("http://localhost:5002");
 });
 
 
