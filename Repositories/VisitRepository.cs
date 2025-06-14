@@ -210,5 +210,33 @@ namespace VisitService.API.Repositories
             }
             return visits;
         }
+
+        public async Task<VisitRequest?> GetVisitByIdFromUserTableAsync(Guid idVisitRequest, Guid userId)
+        {
+            var session = _sessionFactory.GetSession();
+            var stmt = session.Prepare(@"
+        SELECT * FROM visit_requests_by_user 
+        WHERE id_interested_user = ? AND id_visit_request = ?
+        ALLOW FILTERING
+    ");
+            var result = await session.ExecuteAsync(stmt.Bind(userId, idVisitRequest));
+            var row = result.FirstOrDefault();
+            if (row == null) return null;
+
+            return new VisitRequest
+            {
+                IdVisitRequest = row.GetValue<Guid>("id_visit_request"),
+                IdProperty = row.GetValue<Guid>("id_property"),
+                IdInterestedUser = row.GetValue<Guid>("id_interested_user"),
+                IdOwnerUser = row.GetValue<Guid>("id_owner_user"),
+                ContactPhone = row.GetValue<string>("contact_phone"),
+                ContactEmail = row.GetValue<string>("contact_email"),
+                Status = row.GetValue<string>("status"),
+                RequestedDateTime = row.GetValue<DateTime>("requested_datetime"),
+                CreatedAt = row.GetValue<DateTime>("created_at"),
+                UpdatedAt = row.GetValue<DateTime>("updated_at")
+            };
+        }
+
     }
 }

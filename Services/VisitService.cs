@@ -103,6 +103,39 @@ namespace VisitService.API.Services
             return true;
         }
 
+        public async Task<bool> UpdateStatusByInterestedAsync(Guid idVisitRequest, string newStatus, Guid interestedUserId)
+        {
+            if (newStatus.ToLower() != "cancelada")
+                return false;
+
+            var visit = await _repository.GetVisitByIdFromUserTableAsync(idVisitRequest, interestedUserId);
+            if (visit == null)
+                return false;
+
+            await _repository.UpdateVisitStatusAsync(
+                idVisitRequest,
+                newStatus,
+                visit.IdProperty,
+                visit.IdInterestedUser,
+                visit.IdOwnerUser,
+                visit.RequestedDateTime
+            );
+
+            var propertyTitle = await _propertyService.GetPropertyTitleAsync(visit.IdProperty);
+            var ownerEmail = await _userService.GetEmailByUserIdAsync(visit.IdOwnerUser);
+
+            if (!string.IsNullOrEmpty(ownerEmail))
+            {
+                var subject = "Una visita ha sido cancelada por el interesado";
+                var body = $"El usuario interesado ha cancelado la visita para tu propiedad: {propertyTitle ?? visit.IdProperty.ToString()}.\n\n" +
+                           $"Fecha original: {visit.RequestedDateTime:dd/MM/yyyy HH:mm}";
+                await _emailService.SendEmailAsync(ownerEmail, subject, body);
+            }
+
+            return true;
+        }
+
+
         public async Task<List<VisitRequest>> GetVisitsByOwnerAsync(Guid ownerId)
         {
             var visits = await _repository.GetVisitsByOwnerAsync(ownerId);

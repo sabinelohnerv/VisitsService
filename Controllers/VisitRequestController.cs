@@ -72,5 +72,19 @@ namespace VisitService.API.Controllers
             var visits = await _visitService.GetVisitsByPropertyAsync(propertyId);
             return Ok(visits);
         }
+
+        [HttpPut("{id}/cancel")]
+        public async Task<IActionResult> CancelVisitByUser(Guid id)
+        {
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !Guid.TryParse(userIdClaim, out var userId))
+                return Unauthorized();
+
+            var success = await _visitService.UpdateStatusByInterestedAsync(id, "cancelada", userId);
+            if (!success)
+                return Forbid("No tienes permiso o no se puede cancelar esta visita.");
+
+            return NoContent();
+        }
     }
 }
